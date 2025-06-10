@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For u</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fef3c7;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    #box {
+      width: 160px;
+      height: 160px;
+      background-image: url('https://imgur.com/a/html-L4PmaMx.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+
+    .heart {
+      font-size: 48px;
+      color: red;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .heart.show {
+      opacity: 1;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #111827;
+      opacity: 0;
+      transition: opacity 1s ease;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .message.show {
+      opacity: 1;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: hsl(calc(360 * var(--i)), 70%, 60%);
+      top: 0;
+      left: 50%;
+      animation: fall 2s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(calc(-50px + 100px * var(--i))) translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box"></div>
+  <div class="heart" id="heart">❤️</div>
+  <div class="message" id="message">You are not alone sissy^^</div>
+
+  <audio id="sound" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/09/audio_c01cc9d81d.mp3?filename=soft-notification-145977.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    const box = document.getElementById('box');
+    const heart = document.getElementById('heart');
+    const message = document.getElementById('message');
+    const sound = document.getElementById('sound');
+
+    function createConfetti() {
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.setProperty('--i', Math.random());
+        confetti.style.left = `${Math.random() * 100}%`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2000);
+      }
+    }
+
+    box.addEventListener('click', () => {
+      heart.classList.add('show');
+      message.classList.add('show');
+      sound.play();
+      createConfetti();
+    });
+  </script>
+
+</body>
+</html>
